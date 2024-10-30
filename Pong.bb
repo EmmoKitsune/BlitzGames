@@ -14,6 +14,9 @@ Ball = CreateSphere()
 playerOneY# = 0
 playerTwoY# = 0
 
+ballSpeedX# = 0.03
+ballSpeedY# = 0.03
+
 PositionEntity PlayerOne,-4,0,5
 PositionEntity PlayerTwo,4,0,5
 
@@ -35,8 +38,24 @@ While Not KeyHit(1)
 	If KeyDown(200) And EntityY(PlayerTwo) < 3.2 Then playerTwoY# = 0.05 ; UP
 	If KeyDown(208) And EntityY(PlayerTwo) > -3.2 Then playerTwoY# = -0.05; DOWN
 	
+	If EntityX(Ball) > 4.5
+		PositionEntity(Ball,2,0,5)
+		ballSpeedY# = ballSpeedY# * -1
+		ballSpeedX# = ballSpeedX# * -1
+	EndIf
+	
+	If EntityX(Ball) < -4.5
+		PositionEntity(Ball,2,0,5)
+		ballSpeedY# = ballSpeedY# * -1
+		ballSpeedX# = ballSpeedX# * -1
+	EndIf
+	
+	If EntityY(Ball) > 4 Or EntityY(Ball) < -4 Then ballSpeedY# = ballSpeedY# * -1
+	
 	TranslateEntity PlayerOne,0,playerOneY#,0
 	TranslateEntity PlayerTwo,0,playerTwoY#,0
+	
+	TranslateEntity Ball,ballSpeedX#,ballSpeedY#,0
 	
 	UpdateWorld
 	RenderWorld 
